@@ -1,0 +1,111 @@
+[gd_scene load_steps=12 format=3 uid="uid://b4wdgkst1jnjv"]
+
+[ext_resource type="Texture2D" uid="uid://dagcgge5mmxto" path="res://Example World/Objects/World/Epic_BlueSunset_EquiRect_flat.png" id="1_nps60"]
+[ext_resource type="Texture2D" uid="uid://cn7keuyekpm7w" path="res://Example World/protoype texture/Dark/texture_05.png" id="2_a51cq"]
+[ext_resource type="Texture2D" uid="uid://clnfpevxcym48" path="res://Example World/protoype texture/Green/texture_01.png" id="3_76ymh"]
+[ext_resource type="Script" path="res://Example World/Scripts/2D_Player_Character_Completed.gd" id="4_6r6h3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_e57m6"]
+panorama = ExtResource("1_nps60")
+
+[sub_resource type="Sky" id="Sky_3g1ns"]
+sky_material = SubResource("PanoramaSkyMaterial_e57m6")
+
+[sub_resource type="Environment" id="Environment_kgigy"]
+background_mode = 2
+sky = SubResource("Sky_3g1ns")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfji7"]
+albedo_texture = ExtResource("2_a51cq")
+uv1_offset = Vector3(0.5, 0, 0.5)
+uv1_triplanar = true
+uv2_offset = Vector3(0, -0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26tie"]
+albedo_texture = ExtResource("3_76ymh")
+uv1_offset = Vector3(0.5, 0, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_73v4a"]
+radius = 0.45
+height = 1.7
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2uy8b"]
+radius = 0.45
+height = 1.7
+
+[node name="NewWorld" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_color = Color(0.819608, 0.768627, 0.580392, 1)
+light_energy = 2.69
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kgigy")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.11837, 0)
+size = Vector3(50, 35.2433, 50)
+material = SubResource("StandardMaterial3D_hfji7")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26569, 7.34375, 0)
+operation = 2
+size = Vector3(53.5314, 10.694, 49)
+material = SubResource("StandardMaterial3D_hfji7")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 8)
+size = Vector3(2, 1, 3)
+material = SubResource("StandardMaterial3D_26tie")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.75, 3)
+size = Vector3(2, 1.5, 3)
+material = SubResource("StandardMaterial3D_26tie")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 3, -3)
+size = Vector3(2, 2, 3)
+material = SubResource("StandardMaterial3D_26tie")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 3.25, -10)
+size = Vector3(2, 2.5, 3)
+material = SubResource("StandardMaterial3D_26tie")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 3.5, -17)
+size = Vector3(2, 3, 3)
+material = SubResource("StandardMaterial3D_26tie")
+
+[node name="Player_Character" type="CharacterBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.67, 2.052, 10.826)
+collision_layer = 2
+axis_lock_linear_x = true
+floor_max_angle = 0.872665
+script = ExtResource("4_6r6h3")
+Jump_Peak_Time = 0.45
+Jump_Fall_Time = 0.55
+Jump_Height = 2.5
+
+[node name="body_collision" type="CollisionShape3D" parent="Player_Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_73v4a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player_Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+mesh = SubResource("CapsuleMesh_2uy8b")
+
+[node name="MainCamera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 28.865, 1.837, -4.254)
+projection = 1
+size = 19.405

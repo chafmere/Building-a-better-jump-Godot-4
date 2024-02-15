@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://clria2u6byr00"]
+
+[ext_resource type="Script" path="res://Example World/Scripts/FPS_Character.gd" id="1_wc71c"]
+[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://Example World/HUD ASSETS/crosshair001.png" id="2_23s8g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_73v4a"]
+radius = 0.45
+height = 1.7
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2uy8b"]
+radius = 0.45
+height = 1.7
+
+[node name="Player_Character" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.67, 2.052, 15.8539)
+collision_layer = 2
+floor_max_angle = 0.872665
+script = ExtResource("1_wc71c")
+Jump_Peak_Time = 0.45
+Jump_Fall_Time = 0.35
+Jump_Height = 1.5
+Jump_Distance = 4.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="Main_Sight" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_23s8g")
+stretch_mode = 3
+
+[node name="body_collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_73v4a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_2uy8b")
+
+[node name="MainCamera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
+size = 20.578
